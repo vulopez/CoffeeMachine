@@ -1,0 +1,63 @@
+<h2>Comments</h2>
+<p>Compilers and interpreters usually ignore <strong>comments</strong> in computer programs. However, humans can understand code more easily if it contains comments because they provide information about each part of the program, explaining what it does. Comments can also serve as a reminder or a note to yourself, which can be very useful in large projects you work on for a long time. </p><p>We should write comments during the coding process; otherwise, we could forget to comment on the code after we finish the program. Besides, comments written later may prove less useful in the long run.</p><h5 id="line-comment">Line comment</h5><p>The line comment in Go begins with two forward slashes <code class="language-go">//</code> and continues to the end of the line. After the set of forwarding slashes, it is idiomatic to leave one blank space.</p><p>Line comments can appear in two ways: one-line or <strong>multiline</strong> comments. It's good practice to split a one-line comment into multiline when you think your comment is rather long and hard to read. You can also use multiline comments (or the block comments we'll cover in the next section) to express a complex idea. </p><p>An example of line comments looks like this:</p><pre><code class="language-go">// One-line comment
+
+
+// Multiline comments
+//               ▀▀█                        
+//   ▄▄▄   ▄▄▄     █     ▄▄▄   ▄ ▄▄    ▄▄▄▄
+// █▀ ▀█  █▀ ▀█    █    ▀   █  █▀  █  █▀ ▀█
+// █   █  █   █    █    ▄▀▀▀█  █   █  █   █
+// ▀█▄▀█  ▀█▄█▀    ▀▄▄  ▀▄▄▀█  █   █  ▀█▄▀█
+// ▄  █                               ▄  █
+// ▀▀                                 ▀▀ 
+//</code></pre><p>For documenting the "Hello, World!" program, a multiline comment may look like this:</p><pre><code class="language-go">// Print "Hello, World!"
+// to the console
+fmt.Println("Hello, World!")</code></pre><p>It is best to indent a comment by the same amount as the code it gives information about. A comment following a function definition with no indent would have no indent, and so on. In any case, the comment would be aligned with the code it is commenting on.</p><p>Let's take a look at the main function, with comments following each level of indentation in the code:</p><pre><code class="language-go">// main function, no indent, so its comments are not indented either
+func main() {
+    // 
+    // The code in the body of the main function has one level of indentation,
+    // therefore, this comment is also indented by one level
+    //
+
+    // ...
+    var fruit string
+    // ...
+}</code></pre><p>The comment section generally intends to help programmers, whether the original programmer or a collaborator. A piece of code that looks very long and has many comments is still better than code with no comments because undocumented code is hard to understand and maintain.</p><p>When examining the code, you (or anyone else) should be able to understand what happened there or how to do things by looking at the comments.</p><h5 id="block-comments">Block comments</h5><p>You can create a block comment using an opening tag <code class="language-go">/*</code> and a closing tag <code class="language-go">*/</code>. </p><pre><code class="language-go">/*
+This is a typical block comment
+*/
+
+
+/*
+&lt; this is also a block comment &gt;
+---------------------------------- 
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+               ||----w |
+               ||     ||
+*/</code></pre><p>We use block comments mostly for documenting packages; pay attention that it is the norm mentioned in <a href="https://golang.org/doc/effective_go#commentary" rel="noopener noreferrer nofollow" target="_blank">Go's official documentation</a>.</p><pre><code class="language-go">/*
+Package hello provides a simple function HelloWorld() that returns a greeting: "Hello World!"
+*/
+package hello
+
+func HelloWorld() string {
+    return "Hello, World!"
+}</code></pre><p>As you know, any code in a block comment will not be executed. So, if you want to disable a part of your code temporarily, you can place it in a comment section for a while.</p><pre><code class="language-go">func functionThatWillCrash() error { panic("Our program just crashed!") }
+
+// A normal comment
+func greeting() {
+    fmt.Println("Hello world")
+}
+
+func main() {
+    /*
+    functionThatWillCrash()
+    */
+
+    greeting() // This will execute the greeting function
+}</code></pre><h5 id="compiler-directives">Compiler directives</h5><p>When you dive deep into the Go toolchain, you'll come across special directives targeted at the compiler. These directives look like usual comments, except for one feature: they usually don't have a space between the slash and the text after it:</p><pre><code class="language-go">//+build darwin freebsd netbsd openbsd
+
+//go:generate goyacc -o gopher.go -p parser gopher.y
+
+//go:noinline
+func Foo() {}</code></pre><p>For now, you don't need to know what such directives do, we'll get familiar with them a little bit later. If you see such unusual comments in the code, don't remove them, they are there for a purpose.</p><h5 id="conclusion">Conclusion</h5><p>This topic has tried to convince you that comments are a great way of making your Go programs more readable for humans, including yourself, in the future. Adding appropriate comments can increase the clarity of your code and help others collaborate with you on programming projects. Remember to treat others like you'd like to be treated, and leave useful comments on your code!</p>

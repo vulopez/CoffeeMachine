@@ -1,0 +1,67 @@
+<h2>Input/Output</h2>
+<p>We often face the need to display something on the screen or receive an input text from users or another program. In programming, these operations are called <strong>input and output operations</strong> or, simply, I/O.</p><p>In this topic, we'll learn how to perform basic IO operations in Go. We use the <code class="language-go">fmt</code> package from the standard library since it's a useful tool for working with I/O.</p><h5 id="the-hello-world-program">The Hello, World! program</h5><p>To begin working with I/O, let's introduce a simple Go program.</p><p>Every <em>.go</em> file has this generic layout:</p><ol><li><p>Package clause</p></li><li><p>Import declarations (optional)</p></li><li><p>Actual code</p></li></ol><p>To compile and run your project, you need at least one <em>.go</em> file belonging to the <code class="language-go">main</code> package with the <code class="language-go">main</code> function. This function is an entry point for your application. We will use only one <em>.go</em> file in this topic — the <em>main.go </em>file.</p><p>We'll start with the famous <code class="language-go">Hello, World!</code> program:</p><pre><code class="language-go">package main
+
+import "fmt"
+
+func main() {
+    fmt.Print("Hello, World!")
+}</code></pre><p>All code examples below will show the body of the main function.</p><div class="alert alert-primary"><p>To try this example, you can copy it to the <a href="https://go.dev/play/" rel="noopener noreferrer nofollow" target="_blank">Go playground</a> and press the <code class="language-go">Run</code> button! And in case you already have <a href="https://go.dev/doc/install" rel="noopener noreferrer nofollow" target="_blank">Go</a> installed on your computer, you can copy the above code to a <em>main.go</em> file and execute the <code class="language-go">go run main.go</code> command in your terminal. If you want to try another example, don't forget to replace the body of the <code class="language-go">main</code> function with a new code.</p></div><h5 id="printing-strings">Printing strings</h5><p>Before moving on, we should become more confident in printing something simple on the screen. When you run a program, the program output (except error messages) goes to the standard output or <code class="language-go">stdout</code>.</p><p>Writing to the <code class="language-go">stdout</code> is the simplest way to see the results of your program. Programmers often use it for debugging purposes. Let's look at the <code class="language-go">Hello, World!</code> program one more time. Here, we call the <code class="language-go">Print</code> function from the <code class="language-go">fmt</code> package:</p><pre><code class="language-go">fmt.Print("Hello, World!") // Writing "Hello, World!" to the stdout</code></pre><p>For multi-line printing, use the special symbol <code class="language-go">\n</code> to escape the <strong>newline</strong> character and explicitly show where a new line begins:</p><pre><code class="language-go">fmt.Print("Hello, World!\n")
+fmt.Print("This is my first Go program!\n")
+
+// Output:
+// Hello, World!
+// This is my first Go program!</code></pre><p>In addition, there is a special function from this package that appends the newline character <code class="language-go">\n</code> for us. We can rewrite the example above using the <code class="language-go">Println</code> function:</p><pre><code class="language-go">fmt.Println("Hello, World!")
+fmt.Println("This is my first Go program!")
+
+// Output:
+// Hello, World!
+// This is my first Go program!</code></pre><h5 id="printing-different-variables">Printing different variables</h5><p>Now, <code class="language-go">Print</code> and <code class="language-go">Println</code> functions from the <code class="language-go">fmt</code> package can print not only strings. As you progress, you will be able to format output in a sophisticated manner. But let's not be getting ahead of ourselves:</p><pre><code class="language-go">fmt.Println(true)        // Printing type bool,   will print true
+fmt.Println(1023493)     // Printing type int,    will print 1023493
+fmt.Println("my string") // Printing type string, will print my string
+fmt.Println(12.4)        // Printing type float,  will print 12.4
+fmt.Println('A')         // Printing type rune,   will print 65</code></pre><div class="alert alert-warning"><p>The <code class="language-go">rune</code> type is an alias for the <code class="language-go">int32</code> type, so it is printed as an integer by default.</p></div><p><code class="language-go">Print</code> functions can also take several arguments and display them with space separation:</p><pre><code class="language-go">var boolean = true
+var integer = 1023493
+var str = "my string"
+var float = 12.4
+var character = 'A'
+
+fmt.Println(boolean, integer, str, float, character)
+
+// Output:
+// true 1023493 my string 12.4 65</code></pre><p>Now, you've got enough information to create a simple program that will display text and numbers on the screen. Let's explore how we can read the input values to make the program more dynamic.</p><h5 id="reading-the-input">Reading the input</h5><p>So far, we have only worked with sending data to the <code class="language-go">stdout</code>. Now, let's see how we can obtain data from the standard input or <code class="language-go">stdin</code>. The <code class="language-go">fmt.Scan</code> function will help us with that; it takes as arguments pointers to variables that will further store the input data. It stores successive space-separated values in its consecutive arguments. Also, any new lines get counted as spaces:</p><pre><code class="language-go">var name string
+
+fmt.Scan(&amp;name)   // Reading a string from the stdin into the name variable
+fmt.Println(name) // Writing to the stdout the name you've entered 
+                  // in the previous step</code></pre><div class="alert alert-primary"><p>If you don't know yet what pointers are, don't be afraid of the <code class="language-go">Scan</code> function. Just pay attention to the <code class="language-go">&amp;</code> symbol before every argument, as it is important.</p></div><p>Be aware of how the <code class="language-go">Scan</code> function works with different types of variables:</p><pre><code class="language-go">var foo int    // foo is 0
+var str string // string is ""
+
+fmt.Scan(&amp;foo) // If you enter a string character, the scan function
+               // will leave the variable foo unchanged
+
+fmt.Scan(&amp;str) // If you enter an integer, it will be taken as a string
+               // and assigned to the variable str</code></pre><p>Often we will need to read several values at once. In this case, we define variables and then pass their pointers to <code class="language-go">Scan</code>, separating them by a comma. In the example below, if we enter <code class="language-go">Alex 21</code>, it'll first break the string into <code class="language-go">Alex</code> and <code class="language-go">21</code>. Then, it will assign the former to the <code class="language-go">name</code> variable and the latter to the <code class="language-go">age</code> variable. You can play around with it, entering different strings:</p><pre><code class="language-go">var name string
+var age string
+
+fmt.Scan(&amp;name, &amp;age) // Reading from the stdin into the name and age variables
+
+fmt.Println(name)     // Writing to the stdout the value of the name variable    
+fmt.Println(age)      // Writing to the stdout the value of the age variable     
+</code></pre><p>Now, let's put together all we have learned so far and write a whole program!</p><h5 id="simple-program-with-io">Simple program with I/O</h5><p>We can use the <code class="language-go">Scan</code> function for reading from the <code class="language-go">stdin</code> and the <code class="language-go">Print</code> function for sending output to the <code class="language-go">stdout</code>. In this program, we will read the user's name and age and write them to the <code class="language-go">stdout</code>:</p><pre><code class="language-go">package main
+
+import "fmt"
+
+func main() {
+    var name string
+    var age int
+
+    fmt.Print("Enter your name: ") // Writing a request message to the stdout 
+    fmt.Scan(&amp;name)                // Reading from the stdin into the name variable
+    fmt.Println("")                // Going to the next line by writing /n to the stdout 
+
+    fmt.Print("Enter your age: ")  // Writing a request message to the stdout
+    fmt.Scan(&amp;age)                 // Reading from the stdin into the age variable
+    fmt.Println("")                // Going to the next line by writing /n to the stdout
+
+    fmt.Print(name, age)           // Writing to the stdout the values of name and
+                                   // age variables that you have entered 
+}</code></pre><h5 id="conclusion"> Conclusion</h5><p>Here's what you know now:</p><ul><li><p>What standard streams are;</p></li><li><p>How to write to the <code class="language-go">stdout</code> using the <code class="language-go">fmt.Print</code>, <code class="language-go">fmt.Println</code> functions;</p></li><li><p>How to read from the <code class="language-go">stdin</code> using the <code class="language-go">fmt.Scan</code> function.</p></li></ul><p>Now, you are ready to implement these skills in practice!</p>

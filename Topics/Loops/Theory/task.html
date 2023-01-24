@@ -1,0 +1,37 @@
+<h2>Loops</h2>
+<p>In programming, we often face a situation when we need to apply a specific action multiple times with a slight variation of its properties. For example, you have a list of numbers and want to add 1 to every number in the list.<strong> </strong>In this case, your action is to add 1, and its property is the number to which you want to add 1. That's when we need loops. In this topic, we will discuss how we can use loops in the Go language.</p><h5 id="loop-declaration">Loop declaration</h5><p>To create a loop in Go, we use the <code class="language-go">for</code> keyword, and then we specify a condition. After this, we put a block of code inside curly brackets. We call it the body of the loop. One run of this block of code we call an iteration. Before every iteration, Go will check the condition. If it's true, execution goes inside the body of the loop, and if it's false, it leaves the loop. The structure is exemplified as follows:</p><pre><code class="language-go">var condition bool
+
+for condition {
+    // here is the body of the loop
+}</code></pre><p>We can use the <code class="language-go">true</code> constant as the condition to create an infinite loop:</p><pre><code class="language-go">for true {
+    // here is the body of an infinite loop
+}</code></pre><p> Using the <code class="language-go">for</code> keyword without any condition will do the same.</p><pre><code class="language-go">for {
+    // here is the body of an infinite loop
+}</code></pre><p>We can use as a condition anything that returns bool. For example, the result of the comparison operator:</p><pre><code class="language-go">var a, b int
+
+for a &lt; b {
+    // here is the body of the loop
+}</code></pre><h5 id="using-loops">Using loops</h5><p>Let's consider a task: we want to run a code 10 times. What do we need? A counter, a way to increment it after each iteration, and a condition. Here is how we can do it:</p><pre><code class="language-go">var i int           // initializing the i variable as a counter
+
+for i &lt; 10 {        // initializing a loop with the condition i &lt; 10
+    // some code
+    i++             // incrementing the counter at the end of the body
+}                                   </code></pre><p> We can also use an extended loop declaration:</p><pre><code class="language-go">for i := 0; i &lt; 10; i++ { 
+    // some code
+}</code></pre><p>It saves a few lines, but there is one difference: in the former code example above, the <code class="language-go">i</code> variable is visible outside the loop, whereas in the latter example, it is not visible outside, only inside. Keep in mind that within the scope of the loop, we'll have access only to the inner variable <code class="language-go">i</code> if we declare two of them in inner and outer scopes:</p><pre><code class="language-go">var i = 10    // Declaring the i variable in the outer scope
+
+for i := 0; i &lt; 1; i++ {  // Declaring the i variable in the inner(loop) scope
+    fmt.Print(i)          // Will print 0, not 10
+}</code></pre><h5 id="flow-of-control">Flow of control</h5><p>In some cases, we need to exit the loop or jump to the next iteration on command. For these purposes, there are two keywords: <code class="language-go">break</code> and <code class="language-go">continue</code>. Consider the following example:</p><pre><code class="language-go">var sum int           // step 1
+var i int             // step 2
+                      
+for ; i &lt; 50; i++ {   // step 3, 4, 8; you can have a sparse loop declaration
+    if sum &gt; 100 {    // step 5  
+        break         // step 5
+    }
+    if i % 2 == 0 {   // step 6                
+        continue      // step 6
+    }                 
+    sum += i          // step 7
+}                     // step 9
+                      // step 10</code></pre><p> It represents this algorithm:</p><ol><li><p>Initialize the <code class="language-go">sum</code> variable;</p></li><li><p>Initialize the <code class="language-go">i</code> variable as a current number;</p></li><li><p>Loop begins here;</p></li><li><p>If <code class="language-go">i</code> is NOT less than 50, go to step 10 (if the condition is false, we leave the loop);</p></li><li><p>If <code class="language-go">sum</code> is greater than 100, go to step 10 (the body of the loop);</p></li><li><p>If the remainder of the division of <code class="language-go">i</code> by 2 is equal to 0, go to step 8 (the body of the loop);</p></li><li><p>Add <code class="language-go">i</code> to <code class="language-go">sum</code>  (the body of the loop);</p></li><li><p>Increment <code class="language-go">i</code> by 1 (<code class="language-go">i++</code>; we don't consider this as part of the body of the loop, since we have defined it inside the <code class="language-go">for</code> declaration);</p></li><li><p>Go to step 3;</p></li><li><p>Loop ends here.</p></li></ol><p>This algorithm sums all odd numbers between 0 and 49, and it stops if this sum is greater than 100.</p><p>As you can see, executing the <code class="language-go">break</code> command will terminate the loop. Executing the <code class="language-go">continue</code> command will terminate only the current iteration. After this, Go will increment the counter and begin the next iteration if the condition is still true.</p><h5 id="conclusion"> Conclusion</h5><p>Here's what we covered on this topic:</p><ul><li><p>What the loop, the iteration, and the body of the loop are;</p></li><li><p>How to use loops in Go;</p></li><li><p>What <code class="language-go">break</code> and <code class="language-go">continue</code> keywords are;</p></li><li><p>How to use them to control the flow of the loop execution.</p></li></ul>
